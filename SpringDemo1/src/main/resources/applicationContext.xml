@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- ============================================================ -->
+    <!--构造方法创建bean-->
+    <!--<bean  name="user2" class="com.cjw.bean.constructor.UserFactory" factory-method="createUser" p:name="静态工厂"/>
+    <bean name="user3" factory-method="createUser2" factory-bean="UserFactory"/>
+    <bean name="UserFactory" class="com.cjw.bean.constructor.UserFactory"/>-->
+
+    <!-- ============================================================ -->
+    <!--set方法注入-->
+    <bean name="user" class="com.cjw.bean.constructor.User">
+        <!--值类型注入-->
+        <property name="age" value="19"/>
+        <property name="name" value="lisa"/>
+        <!--引用类型注入-->
+        <property name="job" ref="job"/>
+    </bean>
+    <bean name="job" class="com.cjw.bean.constructor.Job" p:name="程序员" p:salary="9999"/>
+    <!-- ============================================================ -->
+    <!--构造函数注入-->
+    <bean name="userConstructor" class="com.cjw.bean.DI.UserDI">
+        <!-- name属性: 构造函数的参数名 -->
+        <!-- index属性: 构造函数的参数索引 -->
+        <!-- type属性: 构造函数的参数类型-->
+        <constructor-arg name="name" value="构造函数注入" index="0" type="java.lang.String"/>
+        <constructor-arg name="job" ref="job"/>
+    </bean>
+    <!-- ============================================================= -->
+    <!-- 复杂类型注入 -->
+    <bean name="Collections" class="com.cjw.bean.DI.CollectionBean">
+        <!-- 如果数组中只准备注入一个值(对象),直接使用value|ref即可
+	    <property name="arr" value="tom" ></property>
+	    -->
+        <!-- array注入,多个元素注入 -->
+        <property name="arr">
+            <array>
+                <value>arr1</value>
+                <value>arr2</value>
+            </array>
+        </property>
+        <!--map类型注入-->
+        <property name="map">
+            <map>
+                <entry key="url" value="test.cjw.com"/>
+                <entry key-ref="user" value-ref="job"/>
+            </map>
+        </property>
+        <!--properties类型注入-->
+        <property name="prop"  >
+            <props>
+                <prop key="driverClass">com.jdbc.mysql.Driver</prop>
+                <prop key="userName">root</prop>
+                <prop key="password">1234</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
