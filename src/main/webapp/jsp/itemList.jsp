@@ -9,7 +9,7 @@
 <title>查询商品列表</title>
 </head>
 <body> 
-<form action="${pageContext.request.contextPath}/delete.action" method="post">
+<form action="${pageContext.request.contextPath}/queryItems.action" method="post">
 查询条件：
 <table width="100%" border=1>
 <tr>
@@ -18,7 +18,8 @@
 </table>
 </form>
 商品列表：
-<form action="${pageContext.request.contextPath}/delete.action" method="post">
+<%--<form action="${pageContext.request.contextPath}/delete.action" method="post">--%>
+<form action="${pageContext.request.contextPath}/updateItems.action" method="post">
 <table width="100%" border=1>
 <tr>
 	<td>选择</td>
@@ -28,11 +29,11 @@
 	<td>商品描述</td>
 	<td>操作</td>
 </tr>
-<c:forEach items="${itemList}" var="item">
+<c:forEach items="${itemList}" var="item" varStatus="s">
 <tr>
 	<td><input type="checkbox" name="ids" value="${item.id}"/></td>
-	<td>${item.name }</td>
-	<td>${item.price }</td>
+	<td><input type="text" name="itemsList[${s.index}].name" value="${item.name }"></td>
+	<td><input type="text" name="itemsList[${s.index }].price" value="${item.price }"></td>
 	<td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	<td>${item.detail }</td>
 
@@ -42,6 +43,7 @@
 
 </table>
 	<input type="submit" value="删除">
+	<input type="submit"  value="修改">
 </form>
 
 </body>

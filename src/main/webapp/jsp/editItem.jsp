@@ -7,7 +7,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改商品信息</title>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript">
+        $(function () {
 
+            var params = {"id": 1,"name": "233厉害","price": 99.9,"detail": "23333"};
+            $.ajax({
+                url : "${pageContext.request.contextPath }/json.action",
+                data : JSON.stringify(params),
+                contentType : "application/json;charset=UTF-8",//发送数据的格式
+                type : "post",
+                dataType : "json",//回调
+                success : function(data){
+
+                    alert(data.name);
+                }
+            });
+            /*$.post(
+                "/json.action",
+                {'name':'xi'},
+                "json"
+            );*/
+        });
+    </script>
 </head>
 <body> 
 	<!-- 上传图片是需要指定属性 enctype="multipart/form-data" -->

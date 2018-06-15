@@ -14,7 +14,18 @@
     <!--配置处理器适配器-->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
     <!--注解驱动-->
-    <mvc:annotation-driven conversion-service="conversionServiceFactoryBean"/>
+    <mvc:annotation-driven>
+       <!-- <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>-->
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
     <!-- 配置Conveter转换器  转换工厂 （日期、去掉前后空格）。。 -->
     <bean id="conversionServiceFactoryBean" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <!-- 配置 多个转换器-->
@@ -29,4 +40,14 @@
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <!--异常捕获处理器-->
+    <bean id="itemsHandlerException" class="com.cjw.test.utils.ItemsHandlerException"/>
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/user/**"/>
+            <bean class="com.cjw.test.utils.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

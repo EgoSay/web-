@@ -1,9 +1,8 @@
 package com.cjw.test.controller;
 
 import com.cjw.test.po.Items;
-import com.cjw.test.pojo.MyException;
-import com.cjw.test.pojo.QueryVo;
 import com.cjw.test.service.ItemServices;
+import com.cjw.test.vo.QueryVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ public class ItemsController {
 
     @Autowired
     private ItemServices itemServices;
+
 
     @RequestMapping(value = "/itemList.action")
     public ModelAndView itemList() {
@@ -99,7 +99,7 @@ public class ItemsController {
      */
     @RequestMapping(value = "/delete.action")
     public String deleteItemById(Integer[] ids){
-
+        System.out.println(ids.toString());
         return "success";
     }
 
@@ -119,6 +119,7 @@ public class ItemsController {
 
     @RequestMapping("/json.action")
     @ResponseBody
+//     public Items json(@RequestBody Items items)
     public void json(@RequestBody String str, HttpServletResponse response) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Items items =  objectMapper.readValue(str, Items.class);
@@ -130,5 +131,7 @@ public class ItemsController {
         response.getWriter().write(json);
         //return json;
     }
+
+
 }
 
